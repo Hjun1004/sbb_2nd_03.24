@@ -64,4 +64,12 @@ class SbbV2ApplicationTests {
 		assertEquals(1, q.getId());
 	}
 
+	@Test
+	@DisplayName("findbySubjectAndContent")
+	void t005(){
+		Question q = this.questionRepository.findBySubjectAndContent("스프링부트 모델 질문입니다.", "id는 자동으로 생성되나요?");
+
+		assertEquals(2, q.getId());
+	}
+
 }
