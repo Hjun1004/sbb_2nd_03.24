@@ -94,4 +94,32 @@ class SbbV2ApplicationTests {
 		this.questionRepository.save(q);
 	}
 
+	@Test
+	@DisplayName("DeleteData")
+	void t008(){
+		assertEquals(2, this.questionRepository.count());
+		Question q = this.questionRepository.findById(1).orElse(null);
+		assertEquals("수정된 제목", q.getSubject());
+
+		this.questionRepository.delete(q);
+		assertEquals(1, this.questionRepository.count());
+
+	}
+
+	@Test
+	@DisplayName("AnswerData")
+	void t009(){
+		assertEquals(2, this.questionRepository.count());
+		Question q = this.questionRepository.findById(1).orElse(null);
+		assertEquals("수정된 제목", q.getSubject());
+
+		this.questionRepository.delete(q);
+		assertEquals(1, this.questionRepository.count());
+
+	}
+
+
+
+
+
 }
