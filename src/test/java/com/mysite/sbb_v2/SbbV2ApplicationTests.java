@@ -72,4 +72,26 @@ class SbbV2ApplicationTests {
 		assertEquals(2, q.getId());
 	}
 
+	@Test
+	@DisplayName("findbySubjectLike")
+	void t006(){
+		List<Question> lq = this.questionRepository.findBySubjectLike("sbb2%");
+		Question q = lq.get(0);
+		assertEquals("sbb2가 무엇인가요?", q.getSubject());
+		/*
+		sbb%: "sbb"로 시작하는 문자열
+		%sbb: "sbb"로 끝나는 문자열
+		%sbb%: "sbb"를 포함하는 문자열
+		*/
+	}
+
+	@Test
+	@DisplayName("ModifyData")
+	void t007(){
+		Question q = this.questionRepository.findById(1).orElse(null);
+		assertEquals("sbb2가 무엇인가요?", q.getSubject());
+		q.setSubject("수정된 제목");
+		this.questionRepository.save(q);
+	}
+
 }
