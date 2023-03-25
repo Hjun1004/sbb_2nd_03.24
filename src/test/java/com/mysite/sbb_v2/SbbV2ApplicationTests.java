@@ -56,6 +56,12 @@ class SbbV2ApplicationTests {
 //		}
 	}
 
+	@Test
+	@DisplayName("findbySubject()")
+	void t004(){
+		Question q = this.questionRepository.findBySubject("sbb2가 무엇인가요?");
 
+		assertEquals(1, q.getId());
+	}
 
 }
