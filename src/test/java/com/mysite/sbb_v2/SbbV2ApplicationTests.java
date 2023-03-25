@@ -1,7 +1,10 @@
 package com.mysite.sbb_v2;
 
+import com.mysite.sbb_v2.answer.answerRepository.AnswerRepository;
+import com.mysite.sbb_v2.answer.entity.Answer;
 import com.mysite.sbb_v2.question.entity.Question;
 import com.mysite.sbb_v2.question.questionRepository.QuestionRepository;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class SbbV2ApplicationTests {
 	@Autowired
 	private QuestionRepository questionRepository;
+
+	@Autowired
+	private AnswerRepository answerRepository;
 
 
 	@Test
@@ -109,17 +115,41 @@ class SbbV2ApplicationTests {
 	@Test
 	@DisplayName("AnswerData")
 	void t009(){
-		assertEquals(2, this.questionRepository.count());
-		Question q = this.questionRepository.findById(1).orElse(null);
-		assertEquals("수정된 제목", q.getSubject());
-
-		this.questionRepository.delete(q);
-		assertEquals(1, this.questionRepository.count());
-
+		Question q = this.questionRepository.findById(2).orElse(null);
+		if(q!=null){
+			Answer answer = new Answer();
+			answer.setContent("네 자동으로 생성됩니다.");
+			answer.setQuestion(q);
+			this.answerRepository.save(answer);
+		}
 	}
 
+	@Test
+	@Transactional
+	@DisplayName("SelectAnswer")
+	void t010(){
+//		Question q = this.questionRepository.findBySubject("스프링부트 모델 질문입니다.");
+//		Answer a = q.getAnswerList().get(0);
+//		assertEquals("네 자동으로 생성됩니다.", a.getContent());
 
+		Optional<Answer> oa = this.answerRepository.findById(1);
+		if(oa.isPresent()){
+			Answer a = oa.get();
+			assertEquals(2, a.getQuestion().getId());
+		}
+	}
 
+	@Test
+	@Transactional
+	@DisplayName("SelectAnswerfromQuestion")
+	void t011(){
+		Question q = this.questionRepository.findById(2).orElse(null);
+		if(q!=null){
+			assertEquals(1,q.getAnswerList().size());
+			Answer a = q.getAnswerList().get(0);
+			assertEquals("네 자동으로 생성됩니다.", a.getContent());
+		}
+	}
 
 
 }
