@@ -1,5 +1,7 @@
-<link rel="stylesheet" text="text/css" th:href="@{|/bootstrap.min.css|}">
-<div class="container my-3">
+<html layout:decorate="~{layout}"></html>
+
+<!-- layout오류 날떄는 setting -> inspection -> xml unbound 체크 해제 -->
+<div layout:fragment="content" class="container my-3">
     <table class="table">
         <thead class="table-dark">
         <tr>
@@ -21,3 +23,4 @@
         </tbody>
     </table>
 </div>
+
