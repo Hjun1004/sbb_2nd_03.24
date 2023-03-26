@@ -32,4 +32,11 @@ public class QuestionService {
         }
 
     }
+
+    public void create(String sub, String con) {
+        Question q = new Question();
+        q.setContent(con);
+        q.setSubject(sub);
+        this.questionRepository.save(q);
+    }
 }
